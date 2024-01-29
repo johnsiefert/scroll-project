@@ -56,7 +56,18 @@ scrollLinks.forEach(function (link) {
     //navigate specific spot
     const id = e.currentTarget.getAttribute('href').slice(1); //slice skips the # and gives you the about instead of #about
     const element = document.getElementById(id);
-    let position =element.offsetTop;
+    //calculate the heights
+    const navHeight = navBar.getBoundingClientRect().height;
+    const containerHeight = linksContainer.getBoundingClientRect().height;
+    const fixedNav = navBar.classList.contains("fixed-nav");
+    let position = element.offsetTop - navHeight;
+
+    if(!fixedNav){
+        position = position - navHeight;
+    }
+    if(navHeight > 82){
+        position = position + containerHeight;
+    }
     window.scrollTo({
         left: 0,
         top: position,
@@ -65,5 +76,4 @@ scrollLinks.forEach(function (link) {
   });
 });
 
-// select links
 
